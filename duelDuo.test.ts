@@ -6,7 +6,7 @@ require('chromedriver')
 const driver = new Builder().withCapabilities(Capabilities.chrome()).build()
 
 beforeEach(async () => {
-    driver.get('http://localhost:3000/')
+    driver.get('https://f19-assessment6-mc.herokuapp.com/')
 })
 
 afterAll(async () => {
@@ -21,6 +21,7 @@ test('Title shows up when page loads', async () => {
 
 test("Clicking draw will show possible robots", async () => {
     await driver.findElement(By.xpath('//button[@id="draw"]')).click()
+    await driver.sleep(2000)
     let botButt = await driver.findElement(By.xpath('//button[@class="bot-btn"]'))
     const disp = await botButt.isDisplayed()
     expect(disp).toBe(true)
@@ -29,6 +30,7 @@ test("Clicking draw will show possible robots", async () => {
 test("Clicking on a bot will add it to your team", async () => {
     //this test will just build off the last one, as it already clicked draw
     await driver.findElement(By.xpath('//button[@id="draw"]')).click()
+    await driver.sleep(2000)
     await driver.findElement(By.className('bot-btn')).click()
     await driver.findElement(By.className('bot-btn')).click()
     const urDuoTitle = await driver.findElement(By.xpath('//h2[@id="your-duo-header"]'))
@@ -37,6 +39,7 @@ test("Clicking on a bot will add it to your team", async () => {
 
 test("Dueling works", async () => {
     await driver.findElement(By.xpath('//button[@id="draw"]')).click()
+    await driver.sleep(2000)
     await driver.findElement(By.className('bot-btn')).click()
     await driver.findElement(By.className('bot-btn')).click()
     await driver.findElement(By.id('duel')).click()
